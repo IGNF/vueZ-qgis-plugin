@@ -35,11 +35,12 @@ class VueZ:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
+        self.layer = None
 
 
     def creer_vue_altitude(self):
-        layer = self.iface.activeLayer()
-        if layer is None:
+        self.layer = self.iface.activeLayer()
+        if self.layer is None:
             QMessageBox.warning(None,"Avertissement","Aucune couche n'est active")
             return
 
@@ -47,7 +48,7 @@ class VueZ:
 
         canvas = self.iface.mapCanvas()
         extent = canvas.extent()  # CRS du canvas
-        layer_crs = layer.crs()
+        layer_crs = self.layer.crs()
         QgsProject.instance().setCrs(layer_crs)
 
         # Créer la couche mémoire
@@ -68,7 +69,7 @@ class VueZ:
         new_entite = []
         append_entite = new_entite.append  # optimisation
 
-        for feature in layer.getFeatures(QgsFeatureRequest().setFilterRect(extent)):
+        for feature in self.layer.getFeatures(QgsFeatureRequest().setFilterRect(extent)):
             for sommet in feature.geometry().vertices():
                 entite = QgsFeature(fields)
                 entite.setGeometry(QgsGeometry.fromPoint(QgsPoint(sommet.x(), sommet.y(), sommet.z())))
@@ -86,6 +87,8 @@ class VueZ:
         layer_tree = QgsProject.instance().layerTreeRoot().findLayer(out.id())
         layer_tree.setItemVisibilityChecked(True)
         self.set_etiquette_altitude()
+
+        self.iface.setActiveLayer(self.layer)
 
         QApplication.restoreOverrideCursor()
 
