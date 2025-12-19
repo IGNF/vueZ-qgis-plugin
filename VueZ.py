@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtCore import Qt
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
-    QgsMarkerSymbol, QgsSingleSymbolRenderer
+    QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform
 
 
 class VueZ:
@@ -47,13 +47,19 @@ class VueZ:
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         canvas = self.iface.mapCanvas()
-        extent = canvas.extent()  # CRS du canvas
+
+        project = QgsProject.instance()
+        project_crs = project.crs()
         layer_crs = self.layer.crs()
-        QgsProject.instance().setCrs(layer_crs)
+
+        extent = canvas.extent()
+        # Reprojection de l'emprise vers le CRS de la couche
+        if project_crs != layer_crs:
+            transform = QgsCoordinateTransform(project_crs, layer_crs, project)
+            extent = transform.transformBoundingBox(extent)
 
         # Créer la couche mémoire
         # Vérifier si la couche "Altitude" existe déjà
-        project = QgsProject.instance()
         existing_layers = project.mapLayersByName("Altitude")
         if existing_layers:
             out = existing_layers[0]
@@ -61,7 +67,7 @@ class VueZ:
             out.dataProvider().truncate()
         else:
             # Créer la couche mémoire
-            out = QgsVectorLayer(f"PointZ?crs={layer_crs}&field=z:double", "Altitude", "memory")
+            out = QgsVectorLayer(f"PointZ?crs={layer_crs.authid()}&field=z:double", "Altitude", "memory")
             project.addMapLayer(out)
         pr = out.dataProvider()
 
