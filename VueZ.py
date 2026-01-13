@@ -24,6 +24,7 @@
 
 from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtCore import Qt
+from owslib.owscontext.geojson import decode_json
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
     QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform
@@ -36,6 +37,7 @@ class VueZ:
         # Save reference to the QGIS interface
         self.iface = iface
         self.layer = None
+        self.deja_affiche = False
 
 
     def creer_vue_altitude(self):
@@ -133,13 +135,17 @@ class VueZ:
     def initGui(self):
         pass
 
-
     def unload(self):
         pass
 
     def run(self):
-        self.creer_vue_altitude()
 
-
-
+        if self.deja_affiche:
+            layer = QgsProject.instance().mapLayersByName("Altitude")[0]
+            QgsProject.instance().removeMapLayer(layer.id())
+            self.iface.mapCanvas().refresh()
+            self.deja_affiche = False
+        else:
+            self.deja_affiche = True
+            self.creer_vue_altitude()
 
