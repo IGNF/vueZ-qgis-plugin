@@ -131,7 +131,10 @@ class VueZ:
         layer.setLabelsEnabled(True)
         layer.triggerRepaint()
 
-
+    def actualiserSelection(self):
+        if self.deja_affiche:
+            self.creer_vue_altitude()
+        
     def initGui(self):
         pass
 
@@ -139,7 +142,7 @@ class VueZ:
         pass
 
     def run(self):
-
+        self.iface.mapCanvas().selectionChanged.connect(self.actualiserSelection)
         if self.deja_affiche:
             layer = QgsProject.instance().mapLayersByName("Altitude")[0]
             QgsProject.instance().removeMapLayer(layer.id())
