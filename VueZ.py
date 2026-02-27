@@ -134,7 +134,7 @@ class VueZ:
     def actualiserSelection(self):
         if self.deja_affiche:
             self.creer_vue_altitude()
-        
+
     def initGui(self):
         pass
 
@@ -143,6 +143,8 @@ class VueZ:
 
     def run(self):
         self.iface.mapCanvas().selectionChanged.connect(self.actualiserSelection)
+        self.layer = self.iface.activeLayer()
+        self.layer.geometryChanged.connect(self.actualiserSelection)
         if self.deja_affiche:
             layer = QgsProject.instance().mapLayersByName("Altitude")[0]
             QgsProject.instance().removeMapLayer(layer.id())

@@ -6,7 +6,7 @@
 name=IGN VueZ
 qgisMinimumVersion=3.0
 description=plugin generique
-version=0.1
+version=0.2
 author=Gérôme PECHEUR
 email=gerome.pecheur@ign.fr
 
