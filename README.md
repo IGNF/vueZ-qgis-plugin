@@ -8,10 +8,3 @@ Il suffit de relancer le plugin si la zone visible a changé.
 
 Prérequis : Le "plugin\_maitre" doit obligatoirement être installé.
 Lien vers le plugin maître : [maitre-qgis-plugin sur GitHub](https://github.com/IGNF/maitre-qgis-plugin)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> 39ea80942336eecbfa4bf45d7f2bc7a3e07532d3
->>>>>>> v0.3.1
