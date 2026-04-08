@@ -22,12 +22,12 @@
  ***************************************************************************/
 """
 
-from PyQt5.QtWidgets import QApplication, QMessageBox
-from PyQt5.QtCore import Qt
-from owslib.owscontext.geojson import decode_json
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
     QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform
+
+from .mapping_version import *
 
 
 class VueZ:
@@ -46,7 +46,7 @@ class VueZ:
             QMessageBox.warning(None,"Avertissement","Aucune couche n'est active")
             return
 
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(WaitCursor)
 
         canvas = self.iface.mapCanvas()
 
@@ -69,7 +69,7 @@ class VueZ:
             out.dataProvider().truncate()
         else:
             # Créer la couche mémoire
-            out = QgsVectorLayer(f"PointZ?crs={layer_crs.authid()}&field=z:double", "Altitude", "memory")
+            out = QgsVectorLayer(f"PointZ?crs={layer_crs.authid()}&field=z:string", "Altitude", "memory")
             project.addMapLayer(out)
         pr = out.dataProvider()
 
@@ -82,6 +82,8 @@ class VueZ:
                 entite = QgsFeature(fields)
                 entite.setGeometry(QgsGeometry.fromPoint(QgsPoint(sommet.x(), sommet.y(), sommet.z())))
                 entite["z"] = sommet.z()
+                if sommet.z() == -1000:
+                    entite["z"] = "NoZ"
                 append_entite(entite)
 
         pr.addFeatures(new_entite)
@@ -142,6 +144,11 @@ class VueZ:
         pass
 
     def run(self):
+        projet = QgsProject.instance()
+        if len(projet.mapLayers()) <= 0:
+            QMessageBox.warning(None,"Avertissement","Aucun projet chargé")
+            return
+
         self.iface.mapCanvas().selectionChanged.connect(self.actualiserSelection)
         self.layer = self.iface.activeLayer()
         self.layer.geometryChanged.connect(self.actualiserSelection)
