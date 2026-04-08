@@ -6,9 +6,11 @@
 name=IGN VueZ
 qgisMinimumVersion=3.0
 description=plugin generique
-version=0.3.0
+version=0.3.1
 author=Gérôme PECHEUR
 email=gerome.pecheur@ign.fr
+license=GNU AGPL v3
+
 
 about=Ce plugin sert à visualiser les z des entitées
 
