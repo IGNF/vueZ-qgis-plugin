@@ -22,12 +22,12 @@
  ***************************************************************************/
 """
 
-from PyQt5.QtWidgets import QApplication, QMessageBox
-from PyQt5.QtCore import Qt
-from owslib.owscontext.geojson import decode_json
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
     QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform
+
+from .mapping_version import *
 
 
 class VueZ:
@@ -46,7 +46,7 @@ class VueZ:
             QMessageBox.warning(None,"Avertissement","Aucune couche n'est active")
             return
 
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(WaitCursor)
 
         canvas = self.iface.mapCanvas()
 
