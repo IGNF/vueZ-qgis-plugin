@@ -25,7 +25,7 @@
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
-    QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform
+    QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform,QgsWkbTypes
 
 from .mapping_version import *
 
@@ -44,6 +44,11 @@ class VueZ:
         self.layer = self.iface.activeLayer()
         if self.layer is None:
             QMessageBox.warning(None,"Avertissement","Aucune couche n'est active")
+            return
+
+        # si ce n'est pas une couche 3D on quitte
+        if not QgsWkbTypes.hasZ(self.layer.wkbType()):
+            self.deja_affiche = False
             return
 
         QApplication.setOverrideCursor(WaitCursor)
@@ -151,9 +156,15 @@ class VueZ:
 
         self.iface.mapCanvas().selectionChanged.connect(self.actualiserSelection)
         self.layer = self.iface.activeLayer()
-        self.layer.geometryChanged.connect(self.actualiserSelection)
+        if self.layer and isinstance(self.layer, QgsVectorLayer):
+            self.layer.geometryChanged.connect(self.actualiserSelection)
         if self.deja_affiche:
-            layer = QgsProject.instance().mapLayersByName("Altitude")[0]
+            layers = QgsProject.instance().mapLayersByName("Altitude")
+            if not layers:
+                return
+            else:
+                layer = layers[0]
+
             QgsProject.instance().removeMapLayer(layer.id())
             self.iface.mapCanvas().refresh()
             self.deja_affiche = False
