@@ -14,8 +14,9 @@ license=GNU AGPL v3
 
 about=Ce plugin sert à visualiser les z des entitées
 
-tracker=http://bugs
-repository=http://repo
+homepage=https://ignf.github.io/vueZ-qgis-plugin/
+tracker=https://github.com/IGNF/vueZ-qgis-plugin/issues
+repository=https://github.com/IGNF/vueZ-qgis-plugin
 # End of mandatory metadata
 
 # Recommended items:
@@ -27,7 +28,6 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=python
 
-homepage=http://homepage
 category=Plugins
 icon=icons/icon_principal.png
 # experimental flag
