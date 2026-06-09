@@ -31,9 +31,12 @@ Simply relaunch the plugin if the visible area has changed.
 
 ## Ressources
 
-User documentation : Clic the button VueZ and the plugin displays the altitudes.
 
-![VueZ](docs/VueZ.jpg)
+
+User documentation : https://ignf.github.io/vueZ-qgis-plugin/
+
+
+
 
 
 ## Licence
