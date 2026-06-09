@@ -82,7 +82,13 @@ class VueZ:
         new_entite = []
         append_entite = new_entite.append  # optimisation
 
-        for feature in self.layer.getFeatures(QgsFeatureRequest().setFilterRect(extent)):
+        # affichage sur les entités dans la zone écran
+        if self.layer.selectedFeatureCount() == 0:
+            features = self.layer.getFeatures(QgsFeatureRequest().setFilterRect(extent))
+        # affichage sur les entités sélectionnées
+        else:
+            features = self.layer.selectedFeatures()
+        for feature in features:
             for sommet in feature.geometry().vertices():
                 entite = QgsFeature(fields)
                 entite.setGeometry(QgsGeometry.fromPoint(QgsPoint(sommet.x(), sommet.y(), sommet.z())))
@@ -90,6 +96,7 @@ class VueZ:
                 if sommet.z() == -1000:
                     entite["z"] = "NoZ"
                 append_entite(entite)
+
 
         pr.addFeatures(new_entite)
 
