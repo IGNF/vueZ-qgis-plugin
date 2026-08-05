@@ -131,7 +131,7 @@ class VueZ:
         etiquette.setFormat(text_format)
 
         # Placement simple (centres des points)
-        etiquette.predefinedPosition = QgsPalLayerSettings.OverPoint
+        etiquette.predefinedPosition = QgsPalLayerSettings.PredefinedPointPosition.OverPoint
 
         layer_settings = QgsVectorLayerSimpleLabeling(etiquette)
         layer.setLabeling(layer_settings)
