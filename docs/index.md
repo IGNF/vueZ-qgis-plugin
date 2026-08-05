@@ -11,7 +11,7 @@ style="width:1.38681in;height:1.47153in"
 alt="logo_IGN_pour_lettre" /></td>
 <td style="font-size: 24px;text-align: center;"><p><strong>Manuel utilisateur du plugin
 « VuesZ »</strong></p>
-<p><strong>V0.3.2</strong></p></td>
+<p><strong>V0.3.3</strong></p></td>
 </tr>
 <tr>
 <td style="font-size: 16px;text-align: center;">Développeur  : Gérôme PECHEUR (IGN)</td>
@@ -32,7 +32,7 @@ alt="logo_IGN_pour_lettre" /></td>
   <h2 id="prerequis" style="color: white;margin:0;" >1. Prérequis</h2>
 </div>
 
-Version de QGIS : version 3 supérieure à 3.28
+Version de QGIS : version 3 supérieure à 3.34
 
 Cette version est compatible QGIS 4.
 

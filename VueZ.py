@@ -26,9 +26,7 @@ from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 from qgis.core import QgsProject,QgsVectorLayer, QgsGeometry, QgsPoint, QgsFeature, QgsFeatureRequest, \
      QgsPalLayerSettings, QgsTextFormat, QgsTextBufferSettings, QgsVectorLayerSimpleLabeling, \
     QgsMarkerSymbol, QgsSingleSymbolRenderer,QgsCoordinateTransform,QgsWkbTypes
-
-from .mapping_version import *
-
+from qgis.PyQt.QtCore import Qt
 
 class VueZ:
     """QGIS Plugin Implementation."""
@@ -38,7 +36,6 @@ class VueZ:
         self.iface = iface
         self.layer = None
         self.deja_affiche = False
-
 
     def creer_vue_altitude(self):
         self.layer = self.iface.activeLayer()
@@ -51,7 +48,7 @@ class VueZ:
             self.deja_affiche = False
             return
 
-        QApplication.setOverrideCursor(WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         canvas = self.iface.mapCanvas()
 
@@ -96,8 +93,6 @@ class VueZ:
                 if sommet.z() == -1000:
                     entite["z"] = "NoZ"
                 append_entite(entite)
-
-
         pr.addFeatures(new_entite)
 
         symbol = QgsMarkerSymbol.createSimple({'name': 'circle','size': '1' })
@@ -111,9 +106,7 @@ class VueZ:
         self.set_etiquette_altitude()
 
         self.iface.setActiveLayer(self.layer)
-
         QApplication.restoreOverrideCursor()
-
 
     def set_etiquette_altitude(self):
         layer = QgsProject.instance().mapLayersByName("Altitude")[0]
@@ -178,4 +171,3 @@ class VueZ:
         else:
             self.deja_affiche = True
             self.creer_vue_altitude()
-
