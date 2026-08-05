@@ -6,13 +6,14 @@
 name=IGN VueZ
 qgisMinimumVersion=3.34
 qgisMaximumVersion=4.99
-description=plugin generique
+description=Affichage des altitudes (Z) de tous les sommets des entités d’un layer.
 version=0.3.3
 author=Gérôme PECHEUR
 email=gerome.pecheur@ign.fr
 license=GNU AGPL v3
 
-about=Ce plugin sert à visualiser les z des entitées
+about=Le layer peut être de type ponctuel, ligne, polyligne ou polygone.
+ Si la sélection est vide ce sont toutes les entités du layer qui sont traitées, sinon seules les entités sélectionnées sont traitées.
 
 homepage=https://ignf.github.io/vueZ-qgis-plugin/
 tracker=https://github.com/IGNF/vueZ-qgis-plugin/issues
