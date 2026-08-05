@@ -4,8 +4,8 @@ Affichage des altitudes (Z) de tous les sommets des entités d’un layer (ponct
 
 ## Pré-requis
 
-Mandatory : The "plugin\_maitre" must be installed.
-Link to the plugin maître : [maitre-qgis-plugin sur GitHub](https://github.com/IGNF/maitre-qgis-plugin)
+Mandatory : The "IGN PluginsManager" must be installed.
+Link to the plugin "IGN PluginsManager" : [PluginsManager-qgis-plugin sur GitHub](https://github.com/IGNF/maitre-qgis-plugin/releases/download/version_finale/PluginsManager.zip)
 
 ## Fonctionnalités
 
